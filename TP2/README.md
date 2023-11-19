@@ -2,7 +2,7 @@
 
 ### Links Relevantes:
 
-- [Overleaf LaTeX](https://www.overleaf.com/3834125665dbckwkzsqrww)
+- [Overleaf LaTeX](https://www.overleaf.com/1855533439qcjdrpmzwwxk)
 - [Google Colab](https://colab.research.google.com/drive/1Q1AfhmzVv-XaPUvHVBtCWKwUXOXOYsqw?usp=sharing)
 
 ## Codigo Ejecutable:
