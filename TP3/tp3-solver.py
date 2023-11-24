@@ -3,27 +3,33 @@ import time
 from pulp import LpProblem, LpVariable, LpSolverDefault, lpSum, LpMinimize
 
 def backtracking(jugadores, pedidos):
-    return seleccion_backtracking(jugadores, pedidos, [], jugadores.copy())
+    return seleccion_backtracking(jugadores, 0, pedidos, set(), set(jugadores))
     
 
-def seleccion_backtracking(jugadores, pedidos, actual, final):
+# jugadores: Lista de Jugadores
+# indice_jugador: Indice del jugador que se esta evaluando actualmente.
+# pedidos: Lista de pedidos de la prensa
+# seleccion_actual: solucion temporaria
+# seleccion_final: solucion final
+def seleccion_backtracking(jugadores, indice_jugador, pedidos, seleccion_actual, seleccion_final):
     if not pedidos:
-        if len(actual) < len(final):
-            final = actual[:]
-        return final
+        if len(seleccion_actual) < len(seleccion_final):
+            seleccion_final = seleccion_actual.copy()
+        return seleccion_final
 
-    for i, jugador_actual in enumerate(jugadores):
+    for i in range(indice_jugador, len(jugadores)):
 
-        if len(actual) + 1 >= len(final):
+        if len(seleccion_actual) + 1 >= len(seleccion_final):
             break
 
-        if jugador_actual not in actual:
-            actual.append(jugador_actual)
+        jugador_actual = jugadores[i]
+        if jugador_actual not in seleccion_actual:
+            seleccion_actual.add(jugador_actual)
             nuevos_pedidos = [conjunto for conjunto in pedidos if jugador_actual not in conjunto]
-            final = seleccion_backtracking(jugadores[i+1:], nuevos_pedidos, actual, final)
-            actual.pop()
+            seleccion_final = seleccion_backtracking(jugadores, i + 1 , nuevos_pedidos, seleccion_actual, seleccion_final)
+            seleccion_actual.remove(jugador_actual)
 
-    return final
+    return seleccion_final
 
 
 def linear(jugadores, pedidos):
